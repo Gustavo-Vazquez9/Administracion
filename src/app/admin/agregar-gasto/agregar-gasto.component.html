@@ -1,0 +1,74 @@
+<div class="contenedor flex w-full">
+
+  <div class="formulario w-6">
+    <form [formGroup]="formGroup">
+    <div class="field ml-5 mr-5 mt-5">
+        <input
+        formControlName="gasto"
+        name="gasto"
+        placeholder="Ingresa el gasto"
+        id="firstname1"
+        type="text"
+        class="text-base p-2 border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field ml-5 mr-5">
+        <input
+        formControlName="monto"
+        name="monto"
+        placeholder="Ingresa el monto"
+        id="lastname1"
+        type="number"
+        class="text-base p-2 border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field ml-5 mr-5">
+      <p-colorPicker formControlName="color"></p-colorPicker>
+      <p-colorPicker formControlName="colorhover"></p-colorPicker>
+    </div>
+    <div class="field ml-5 mr-5">
+      <textarea
+      formControlName="descripcion"
+      name="descripcion"
+      placeholder="Descripcion"
+      id="address"
+      type="text"
+      rows="4"
+      class="text-base  surface-border p-2 border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+    </div>
+    <div class="card flex justify-content-center">
+      <p-button
+      label="Agregar"
+      styleClass="w-full w-15rem h-2rem"
+      (click)="agregarGasto()"></p-button>
+    </div>
+  </form>
+  </div>
+
+
+  <div class="tabla w-6">
+    <div class="field ml-5 mr-5 mt-5">
+      <p-table [value]="gastos" [tableStyle]="{ 'min-width': '100%'}">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th class="text-center">Gato</th>
+                  <th class="text-center">Monto</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-gastos>
+              <tr>
+                  <td class="text-center">{{ gastos.gasto }}</td>
+                  <td class="text-center">{{ gastos.monto }}</td>
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<div class="card flex justify-content-center">
+  <p-button
+  label="Finalizar"
+  styleClass="w-full w-15rem h-2rem mt-3"
+  (click)="guardarGasto()"></p-button>
+</div>
+
+
+<app-loader *ngIf="loading"></app-loader>

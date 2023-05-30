@@ -1,0 +1,33 @@
+{
+  "constantes": [
+    {
+      "gastosConstantes": [
+        "Gasto",
+        "Renta",
+        "Diezmo",
+        "Pasajes"
+      ],
+      "montoConstantes": [
+        2000,
+        1350,
+        800,
+        400
+      ],
+      "coloresConstantes": [
+        "#A071F7",
+        "#6E6B70",
+        "#77F2A8",
+        "#F5CA5D"
+      ],
+      "hoverConstantes": [
+        "#894EF7",
+        "#535255",
+        "#4EF38F",
+        "#F7C035"
+      ]
+    }
+  ],
+  "gastos": [
+  ],
+  "Ahorros": []
+}

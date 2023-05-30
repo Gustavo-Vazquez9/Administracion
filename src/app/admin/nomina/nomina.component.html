@@ -1,0 +1,31 @@
+<div class="contenedor">
+  <div class="card flex justify-content-center align-items-center">
+    <form [formGroup]="formGroup">
+    <div class="flex-auto">
+        <label class="mb-2 block font-light" for="nomina">Ingresa tu nomina</label>
+        <p-inputNumber
+        formControlName="nomina"
+        name="nomina"
+        [(ngModel)]="obtenerNomina"
+        [showButtons]="true"
+        inputId="nomina"
+        mode="currency"
+        currency="MXN"
+        decrementButtonClass="bg-pink-400 border-300 ml-1"
+        incrementButtonClass="bg-pink-400 border-300 ml-1"
+        [step]="1000">
+      </p-inputNumber>
+    </div>
+    <div class="elemento flex flex-wrap gap-3 justify-content-center mt-4">
+      <p-button
+      label="Ingresar"
+      styleClass="p-button-rounded w-10rem h-2rem bg-pink-400 border-300"
+      (click)="ingresarAdmin()">
+      </p-button>
+    </div>
+      </form>
+  </div>
+</div>
+
+
+<app-loader *ngIf="loading"></app-loader>
