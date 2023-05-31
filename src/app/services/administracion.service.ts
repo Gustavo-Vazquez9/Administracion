@@ -41,4 +41,24 @@ export class AdministracionService {
         })
       )
   }
+
+  public getFechas(url: string): Observable<any> {
+    return this.http.get<any>(url)
+      .pipe(
+        map(data => {
+          // this.loading.next(false);
+          return data;
+        })
+      )
+  }
+
+  public postFechas(url: string, httpHeaders: {}): Observable<any> {
+    return this.http.post<any>(url, httpHeaders)
+      .pipe(
+        map(data => {
+          this.loading.next(false);
+          return data;
+        })
+      )
+  }
 }

@@ -4,13 +4,14 @@ import { ServicesService } from '../../services/services.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AgregarGastoComponent } from '../agregar-gasto/agregar-gasto.component';
 import { AdministracionService } from 'src/app/services/administracion.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
   styleUrls: ['./principal.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, DatePipe]
 })
 export class PrincipalComponent {
 
@@ -20,31 +21,56 @@ export class PrincipalComponent {
   public montos : number[] = [];
   public fecha : Date = new Date();
   public datosAgregados : Object[] = [];
-  public gastosConstantesNombre : string[] = [];
-  public gastosConstantesMontos : number[] = [];
-  public gastosConstantesColores : string[] = [];
-  public gastosConstantesColoresHover : string[] = [];
+  public gastosConstantesNombre : any[] = [];
+  public gastosConstantesMontos : any[] = [];
+  public gastosConstantesColores : any[] = [];
+  public gastosConstantesColoresHover : any[] = [];
   public options: any;
   public total: any = "";
   public nominaIngresada : number = 0;
   name: string | undefined;
+  public fechaHoy : any[] = [];
 
   ref!: DynamicDialogRef;
 
   constructor(
     private servicioNomina : ServicesService,
     private adminService : AdministracionService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private datePipe: DatePipe
     ) {}
 
     ngOnInit() {
       this.nominaIngresada = this.servicioNomina.getNomina();
-      this.adminService.getGastosConstantes("http://192.168.0.3:3000/constantes")
-      .subscribe( (data) =>
-      {
-        this.plantillaGrafica(data[0].gastosConstantes,data[0].montoConstantes,data[0].coloresConstantes,data[0].hoverConstantes);
-      });
 
+      // this.adminService.getFechas("http://192.168.0.3:3000/fechas")
+      // .subscribe( (data) =>
+      // {
+      //   this.fechaHoy = data.filter( ( item : any ) =>
+      //   {
+      //     return item.fecha === this.datePipe.transform(this.fecha, 'MMM dd, yyyy');
+      //   });
+
+      //   if(this.fechaHoy.length != 0)
+      //   {
+      //     this.adminService.getGastosConstantes(`http://192.168.0.3:3000/fechas/${this.fechaHoy[0].id}/gastos`)
+      //     .subscribe( (data) =>
+      //     {
+      //       data.forEach((element:any) => {
+      //         this.plantillaGrafica(element.gasto,element.monto,element.color,element.colorhover);
+      //       });
+      //     });
+      //   } else
+      //   {
+      //     this.adminService.getGastosConstantes("http://192.168.0.3:3000/constantes")
+      //     .subscribe( (data) =>
+      //     {
+      //       data.forEach((element:any) => {
+      //         this.plantillaGrafica(element.gastosConstantes,parseInt(element.montoConstantes),element.coloresConstantes,element.hoverConstantes);
+      //       });
+      //     });
+      //   }
+      // });
       }
 
       openDialog() {
@@ -63,16 +89,15 @@ export class PrincipalComponent {
             this.datosAgregados = elementosDeAgregarGastoComponente;
             this.agregarNuevosGastos(this.datosAgregados);
         });
-
         }, 2000);
       }
 
-      plantillaGrafica(etiqueta : string[],datos : number[],color : string[],hover : string[]) {
+      plantillaGrafica(etiqueta : string[]|string,datos : number[]|number,color : string[]|string,hover : string[]|string) {
 
-        this.gastosConstantesNombre=etiqueta;
-        this.gastosConstantesMontos=datos;
-        this.gastosConstantesColores=color;
-        this.gastosConstantesColoresHover=hover;
+          this.gastosConstantesNombre.push(etiqueta);
+          this.gastosConstantesMontos.push(datos);
+          this.gastosConstantesColores.push(color);
+          this.gastosConstantesColoresHover.push(hover);
 
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
@@ -126,10 +151,11 @@ export class PrincipalComponent {
         {
           this.gastosConstantesNombre.push(elementos.gasto);
           this.gastosConstantesMontos.push(elementos.monto);
+          this.gastosConstantesColores.push(elementos.color);
+          this.gastosConstantesColoresHover.push(elementos.colorhover);
         });
-
+        this.plantillaGrafica(this.gastosConstantesNombre,this.gastosConstantesMontos,this.gastosConstantesColores,this.gastosConstantesColoresHover);
       }
-
 
       ngOnDestroy() {
         if (this.ref) {
