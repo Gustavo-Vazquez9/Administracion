@@ -33,6 +33,55 @@
         "Gasto",
         "Renta",
         "Diezmo",
+        "Pasajes",
+        "Netflix",
+        "Renta Complemento",
+        "Extras"
+      ],
+      "monto": [
+        2000,
+        1350,
+        800,
+        400,
+        70,
+        1350,
+        2000
+      ],
+      "descripcion": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Se agrega otra mitad de la renta porque no pagamos",
+        ""
+      ],
+      "color": [
+        "#A071F7",
+        "#6E6B70",
+        "#77F2A8",
+        "#F5CA5D",
+        "#ff0000",
+        "#00ff5e",
+        "#ffc400"
+      ],
+      "colorhover": [
+        "#894EF7",
+        "#535255",
+        "#4EF38F",
+        "#F7C035",
+        "#ad0202",
+        "#069c15",
+        "#8f680d"
+      ],
+      "id": 1,
+      "idFecha": 1
+    },
+    {
+      "gasto": [
+        "Gasto",
+        "Renta",
+        "Diezmo",
         "Pasajes"
       ],
       "monto": [
@@ -41,7 +90,12 @@
         800,
         400
       ],
-      "descripcion": [],
+      "descripcion": [
+        "",
+        "",
+        "",
+        ""
+      ],
       "color": [
         "#A071F7",
         "#6E6B70",
@@ -54,86 +108,19 @@
         "#4EF38F",
         "#F7C035"
       ],
-      "id": 1,
-      "idFecha": 1
-    },
-    {
-      "gasto": "p1",
-      "monto": 100,
-      "descripcion": "",
-      "color": "#d97979",
-      "colorhover": "#b38888",
       "id": 2,
-      "idFecha": 3
-    },
-    {
-      "gasto": "a",
-      "monto": 1,
-      "descripcion": "",
-      "color": "#f2bdbd",
-      "colorhover": "#bd9d9d",
-      "id": 3,
-      "idFecha": 3
-    },
-    {
-      "gasto": "a",
-      "monto": 1,
-      "descripcion": "",
-      "color": "#f5c4c4",
-      "colorhover": "#c4a7a7",
-      "id": 4,
-      "idFecha": 3
-    },
-    {
-      "gasto": "a",
-      "monto": 1,
-      "descripcion": "",
-      "color": "#b37979",
-      "colorhover": "#8a8181",
-      "id": 5,
-      "idFecha": 3
-    },
-    {
-      "gasto": "a",
-      "monto": 1,
-      "descripcion": "",
-      "color": "#bf8e8e",
-      "colorhover": "#7d5252",
-      "id": 6,
-      "idFecha": 3
-    },
-    {
-      "gasto": "p1",
-      "monto": 100,
-      "descripcion": "",
-      "color": "#c74a4a",
-      "colorhover": "#964e4e",
-      "id": 7,
-      "idFecha": 3
-    },
-    {
-      "gasto": "p2",
-      "monto": 300,
-      "descripcion": null,
-      "color": "#a12b2b",
-      "colorhover": "#4f2121",
-      "id": 8,
-      "idFecha": 3
+      "idFecha": 2
     }
   ],
   "Ahorros": [],
   "fechas": [
     {
       "id": 1,
-      "fecha": "May 30, 2023"
+      "fecha": "Jun 01, 2023"
     },
     {
       "id": 2,
-      "fecha": "May 31, 2023"
-    },
-    {
-      "id": 3,
-      "fecha": "May 29, 2023"
+      "fecha": "Jun 02, 2023"
     }
   ]
 }

@@ -1,0 +1,21 @@
+
+<app-menu></app-menu>
+  <div class="contenedor mt-5 flex flex-wrap justify-content-around"
+  style="max-width: 100%">
+
+    <div 
+    class="block justify-content-center align-items-center"
+    style="min-width: 100px; min-height: 100px"
+    *ngFor="let item of historial; let i = index">
+    <p-chart
+      type="doughnut"
+      [data]="item"
+      [options]="options">
+    </p-chart>
+    <div class="text">
+      <h1 class="text-600 text-lg font-italic font-light">{{ fechas[i] }} - {{ totales[i] | currency}}</h1>
+    </div>
+
+  </div>   
+
+<app-loader *ngIf="loading"></app-loader>

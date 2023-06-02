@@ -15,10 +15,12 @@ export class MenuComponent {
           {
               label: 'Administracion',
               icon: 'pi pi-fw pi-dollar',
+              routerLink:['/admin']
           },
           {
               label: 'Historial',
-              icon: 'pi pi-fw pi-clock'
+              icon: 'pi pi-fw pi-clock',
+              routerLink:['/historial']
           },
           {
             label: 'Cerrar Sesion',

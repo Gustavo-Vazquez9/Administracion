@@ -1,0 +1,54 @@
+<div class="contenedor flex w-full">
+
+  <div class="formulario w-full">
+    <form [formGroup]="formGroup">
+    <div class="field ml-5 mr-5 mt-5">
+      <p-dropdown
+      formControlName="gasto"
+      name="gasto"
+      [options]="gastosRecibidos"
+      optionLabel="name"
+      (onChange)="seleccionGato()"
+      styleClass="text-base  border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full h-3rem">
+    </p-dropdown>
+    </div>
+    <div class="field ml-5 mr-5">
+      <input
+        formControlName="gastoA"
+        name="gastoA"
+        type="text"
+        class="text-base p-2 border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field ml-5 mr-5">
+      <input
+        formControlName="monto"
+        name="monto"
+        type="number"
+        class="text-base p-2 border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field ml-5 mr-5">
+      <p-colorPicker
+      formControlName="color">
+    </p-colorPicker>
+      <p-colorPicker
+      formControlName="colorhover">
+    </p-colorPicker>
+    </div>
+    <div class="field ml-5 mr-5">
+      <textarea
+      formControlName="descripcion"
+      name="descripcion"
+      placeholder="Descripcion"
+      id="address"
+      type="text"
+      rows="4"
+      class="text-base  surface-border p-2 border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+    </div>
+    <div class="card flex justify-content-center">
+      <p-button
+      label="Modificar"
+      styleClass="w-full w-15rem h-2rem bg-green-400 border-green-400"
+      (click)="actualizarGasto()"></p-button>
+    </div>
+  </form>
+  </div>

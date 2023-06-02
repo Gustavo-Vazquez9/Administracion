@@ -5,24 +5,23 @@
     <h1 class="fecha">{{fecha | date}} - {{nominaIngresada | currency}}</h1>
   </div>
 
-  <div class="elementos flex justify-content-center align-items-center">
-    <div class="card relative flex justify-content-center text-align-center">
+  <div class="elementos flex justify-content-center align-items-center con">
+    <div class="card flex justify-content-center text-align-center grafica">
       <p-chart
       type="doughnut"
       [data]="data"
       [options]="options"></p-chart>
-      <h1 class="total">{{total}}</h1>
+      <h1 class="total"></h1>
     </div>
-    <div class="card flex flex-wrap justify-content-center align-items-center w-13rem">
-      <p-button (click)="openDialog()" label="Agregar gasto" icon="pi pi-arrow-up" styleClass="mb-2 w-13rem h-2rem text-sm font-italic bg-blue-400 border-blue-400 border-round-2xl"></p-button>
-      <p-button label="Modificar gasto" icon="pi pi-undo" styleClass="mb-2 w-13rem h-2rem text-sm font-italic bg-green-400 border-green-400 border-round-2xl p-button-success"></p-button>
-      <p-button label="Agregar ahorro" icon="pi pi-home
-      " styleClass="mb-2 w-13rem h-2rem text-sm font-italic bg-pink-400 border-pink-400 border-round-2xl p-button-danger"></p-button>
+    <div class="card flex flex-wrap justify-content-center align-items-center w-13rem botones">
+      <p-button (click)="openAgregar()" label="Agregar gasto" icon="pi pi-arrow-up" styleClass="mb-2 w-13rem h-2rem text-sm font-italic bg-blue-400 border-blue-400 border-round-2xl"></p-button>
+      <p-button (click)="openModificar()" label="Modificar gasto" icon="pi pi-undo" styleClass="mb-2 w-13rem h-2rem text-sm font-italic bg-green-400 border-green-400 border-round-2xl p-button-success"></p-button>
+      <p-button (click)="openEliminar()" label="Eliminar ahorro" icon="pi pi-arrow-down" styleClass="mb-2 w-13rem h-2rem text-sm font-italic bg-red-400 border-red-400 border-round-2xl p-button-danger"></p-button>
     </div>
   </div>
 
-  <div class="card flex flex-wrap justify-content-center align-items-center mt-5">
-    <p-button label="Agregar nueva Quincena" icon="pi pi-plus" styleClass="mb-2 h-2rem text-sm font-italic bg-gray-900 p-button-secondary border-round-2xl"></p-button>
+  <div class="card flex justify-content-center align-items-center text-color-secondary datos">
+    <h2 class="restante">Total  {{total | currency}} | Restante  {{restante | currency}}</h2>
   </div>
 </div>
 

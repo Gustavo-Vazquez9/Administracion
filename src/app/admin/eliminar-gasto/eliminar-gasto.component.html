@@ -1,0 +1,22 @@
+<div class="contenedor flex w-full h-20rem">
+
+  <div class="formulario w-full">
+    <form [formGroup]="formGroup">
+    <div class="field ml-5 mr-5 mt-5 mb-8">
+      <p-dropdown
+      formControlName="gasto"
+      name="gasto"
+      [options]="gastosRecibidos"
+      optionLabel="name"
+      (onChange)="seleccionGato()"
+      styleClass="text-base border-1 surface-border border-round appearance-none outline-none focus:border-primary w-full h-3rem">
+    </p-dropdown>
+    </div>
+    <div class="card flex justify-content-center mt-8">
+      <p-button
+      label="Eliminar"
+      styleClass="w-full w-15rem h-2rem bg-red-400 border-red-400"
+      (click)="eliminarGasto()"></p-button>
+    </div>
+  </form>
+  </div>

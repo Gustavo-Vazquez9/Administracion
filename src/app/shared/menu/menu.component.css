@@ -1,0 +1,20 @@
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+  .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  p-menubar {
+    position: absolute;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  img {
+    justify-content: flex-end;
+    z-index: 10;
+    margin-left: 75%;
+  }
+}

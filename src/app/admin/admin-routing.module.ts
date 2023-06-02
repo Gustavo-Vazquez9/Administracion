@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrincipalComponent } from './principal/principal.component';
 import { NominaComponent } from './nomina/nomina.component';
 import { AgregarGastoComponent } from './agregar-gasto/agregar-gasto.component';
+import { HistorialComponent } from './historial/historial.component';
 
 const routes: Routes = [
   {
     path:'',
-    component: PrincipalComponent,
+    component: NominaComponent,
   },
   {
     path:'admin',
@@ -18,8 +19,8 @@ const routes: Routes = [
     component: NominaComponent,
   },
     {
-    path:'agregarGasto',
-    component: AgregarGastoComponent,
+    path:'historial',
+    component: HistorialComponent,
   },
 ];
 

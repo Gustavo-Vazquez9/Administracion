@@ -1,6 +1,20 @@
-.total {
-  position: absolute;
-  top: 4.1em;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #807e7e;
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+  .con {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .grafica {
+    width: 100%;
+  }
+  .botones {
+    margin-top: 1em;
+  }
+  .datos {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
 }

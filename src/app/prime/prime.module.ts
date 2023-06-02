@@ -9,7 +9,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TableModule } from 'primeng/table';
 import { ColorPickerModule } from 'primeng/colorpicker';
-
+import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
@@ -23,7 +23,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InputNumberModule,
     TableModule,
     DynamicDialogModule,
-    ColorPickerModule
+    ColorPickerModule,
+    DropdownModule
   ],
   exports:[
     ButtonModule,
@@ -33,7 +34,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InputNumberModule,
     TableModule,
     DynamicDialogModule,
-    ColorPickerModule
+    ColorPickerModule,
+    DropdownModule
   ]
 })
 export class PrimeModule { }

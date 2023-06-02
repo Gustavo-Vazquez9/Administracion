@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 })
 export class AdministracionService {
   loading = new BehaviorSubject<boolean>(false);
+  id : number | string = 0;
 
   constructor(
     private http: HttpClient
@@ -42,6 +43,16 @@ export class AdministracionService {
       )
   }
 
+  public putGastos(url: string, httpHeaders: {}): Observable<any> {
+    return this.http.put<any>(url, httpHeaders)
+      .pipe(
+        map(data => {
+          this.loading.next(false);
+          return data;
+        })
+      )
+  }
+
   public getFechas(url: string): Observable<any> {
     return this.http.get<any>(url)
       .pipe(
@@ -60,5 +71,14 @@ export class AdministracionService {
           return data;
         })
       )
+  }
+
+  public setId( id : number | string)
+  {
+    this.id = id;
+  }
+  public getId( )
+  {
+    return this.id;
   }
 }

@@ -5,6 +5,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AgregarGastoComponent } from '../agregar-gasto/agregar-gasto.component';
 import { AdministracionService } from 'src/app/services/administracion.service';
 import { DatePipe } from '@angular/common';
+import { ModificarGastoComponent } from '../modificar-gasto/modificar-gasto.component';
+import { EliminarGastoComponent } from '../eliminar-gasto/eliminar-gasto.component';
 
 
 @Component({
@@ -27,9 +29,12 @@ export class PrincipalComponent {
   public gastosConstantesColoresHover : any[] = [];
   public options: any;
   public total: any = "";
+  public restante: any = "";
   public nominaIngresada : number = 0;
   name: string | undefined;
-  public fechaHoy : any[] = [];
+  public fechaHoy : string | number = "sinFecha";
+  public postFechas : any;
+  public postGasto : any;
 
   ref!: DynamicDialogRef;
 
@@ -42,38 +47,10 @@ export class PrincipalComponent {
 
     ngOnInit() {
       this.nominaIngresada = this.servicioNomina.getNomina();
-
-      // this.adminService.getFechas("http://192.168.0.3:3000/fechas")
-      // .subscribe( (data) =>
-      // {
-      //   this.fechaHoy = data.filter( ( item : any ) =>
-      //   {
-      //     return item.fecha === this.datePipe.transform(this.fecha, 'MMM dd, yyyy');
-      //   });
-
-      //   if(this.fechaHoy.length != 0)
-      //   {
-      //     this.adminService.getGastosConstantes(`http://192.168.0.3:3000/fechas/${this.fechaHoy[0].id}/gastos`)
-      //     .subscribe( (data) =>
-      //     {
-      //       data.forEach((element:any) => {
-      //         this.plantillaGrafica(element.gasto,element.monto,element.color,element.colorhover);
-      //       });
-      //     });
-      //   } else
-      //   {
-      //     this.adminService.getGastosConstantes("http://192.168.0.3:3000/constantes")
-      //     .subscribe( (data) =>
-      //     {
-      //       data.forEach((element:any) => {
-      //         this.plantillaGrafica(element.gastosConstantes,parseInt(element.montoConstantes),element.coloresConstantes,element.hoverConstantes);
-      //       });
-      //     });
-      //   }
-      // });
+      this.identificaFechaHoy();
       }
 
-      openDialog() {
+      openAgregar() {
         this.ref = this.dialogService.open(AgregarGastoComponent, {
             header: 'Agregar Gasto',
             width: '70%',
@@ -94,25 +71,20 @@ export class PrincipalComponent {
 
       plantillaGrafica(etiqueta : string[]|string,datos : number[]|number,color : string[]|string,hover : string[]|string) {
 
-          this.gastosConstantesNombre.push(etiqueta);
-          this.gastosConstantesMontos.push(datos);
-          this.gastosConstantesColores.push(color);
-          this.gastosConstantesColoresHover.push(hover);
-
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         this.data = {
-          labels: this.gastosConstantesNombre,
+          labels: etiqueta,
           datasets: [
               {
-                  data: this.gastosConstantesMontos,
-                  backgroundColor: this.gastosConstantesColores,
-                  hoverBackgroundColor: this.gastosConstantesColoresHover
+                  data: datos,
+                  backgroundColor: color,
+                  hoverBackgroundColor: hover
               }
           ]
       };
       this.options = {
-        cutout: '50%',
+        cutout: '0%',
         plugins: {
             legend: {
                 labels: {
@@ -142,20 +114,133 @@ export class PrincipalComponent {
               return acumulador+valorActual
             },0);
           }
+
+          this.restante = this.nominaIngresada - this.total;
         },2000);
       }
 
-      agregarNuevosGastos(datos : Object[])
+      agregarNuevosGastos(datos : any)
       {
-        datos.forEach( (elementos : any)=>
-        {
-          this.gastosConstantesNombre.push(elementos.gasto);
-          this.gastosConstantesMontos.push(elementos.monto);
-          this.gastosConstantesColores.push(elementos.color);
-          this.gastosConstantesColoresHover.push(elementos.colorhover);
-        });
-        this.plantillaGrafica(this.gastosConstantesNombre,this.gastosConstantesMontos,this.gastosConstantesColores,this.gastosConstantesColoresHover);
+        this.plantillaGrafica(datos.gasto,datos.monto,datos.color,datos.colorhover);
       }
+
+      identificaFechaHoy()
+      {
+        this.adminService.getFechas("https://api-administracion-9e580-default-rtdb.firebaseio.com/fechas.json")
+        .subscribe( (data) =>
+        {
+          data.forEach((item : any) => {
+            if(item.fecha === this.datePipe.transform(this.fecha, 'MMM dd, yyyy'))
+            {
+              this.fechaHoy = item.id;
+              this.adminService.setId(this.fechaHoy);
+              this.obtenerYPintarGrafica(this.fechaHoy);
+            }
+          });
+          //condicion para crear nueva fecha y nuevo gasto predefinido a la fecha nueva
+          if(this.fechaHoy === "sinFecha")
+          {
+            this.crearNuevaFecha(data.length);
+            this.crearNuevoGastoEnNuevaFecha(data.length);
+          }
+        });
+      }
+
+      obtenerYPintarGrafica(id : any)
+      {
+        this.adminService.getFechas(`https://api-administracion-9e580-default-rtdb.firebaseio.com/gastos/${id}.json`)
+        .subscribe( (data) =>
+        {
+          this.plantillaGrafica(data.gasto,data.monto,data.color,data.colorhover);
+        });
+      }
+
+      crearNuevaFecha(cantidadDeElementos : number)
+      {
+        let aumentaElUltimoId = cantidadDeElementos+1;
+        this.adminService.setId(aumentaElUltimoId);
+        this.postFechas = {
+          "id": aumentaElUltimoId,
+          "fecha": this.datePipe.transform(this.fecha, 'MMM dd, yyyy')
+        }
+        this.adminService.postFechas("https://api-administracion-9e580-default-rtdb.firebaseio.com/fechas.json", this.postFechas)
+        .subscribe( (data) => {});
+      }
+
+      crearNuevoGastoEnNuevaFecha(cantidadDeElementos : number)
+      {
+        const gasto : any[]= ["Gasto","Renta","Diezmo","Pasajes"];
+        const monto : any[]= [2000,1350,800,400];
+        const descripcion : any[]= ["","","",""];
+        const color : any[]= ["#A071F7","#6E6B70","#77F2A8","#F5CA5D"];
+        const colorhover : any[]= ["#894EF7","#535255","#4EF38F","#F7C035"];
+        let aumentaElUltimoId = cantidadDeElementos+1;
+        this.postGasto =
+        {
+          "gasto": gasto,
+          "monto": monto,
+          "descripcion": descripcion,
+          "color": color,
+          "colorhover": colorhover,
+          "id": aumentaElUltimoId,
+          "idFecha": aumentaElUltimoId
+        }
+
+        this.adminService.postGastos("https://api-administracion-9e580-default-rtdb.firebaseio.com/gastos.json", this.postGasto)
+        .subscribe( (data) => {
+          this.plantillaGrafica(data.gasto,data.monto,data.color,data.colorhover);
+        });
+
+      }
+
+
+      ////////////
+      //Modificar
+      ///////////7
+      openModificar() {
+        this.ref = this.dialogService.open(ModificarGastoComponent, {
+            header: 'Modificar Gasto',
+            width: '50%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: true
+        });
+
+        this.loading = true;
+        setTimeout(() => {
+          this.loading=false;
+          this.ref.onClose.subscribe( (elementosActualizados) => {
+            this.datosAgregados = elementosActualizados;
+            this.agregarNuevosGastos(this.datosAgregados);
+        });
+        }, 2000);
+      }
+
+
+
+      //////////////
+      //Eliminar
+      //////////////
+
+      openEliminar() {
+        this.ref = this.dialogService.open(EliminarGastoComponent, {
+            header: 'Eliminar Gasto',
+            width: '50%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: true
+        });
+
+        this.loading = true;
+        setTimeout(() => {
+          this.loading=false;
+          this.ref.onClose.subscribe( (elementosActualizados) => {
+            this.datosAgregados = elementosActualizados;
+            this.agregarNuevosGastos(this.datosAgregados);
+        });
+        }, 2000);
+      }
+
 
       ngOnDestroy() {
         if (this.ref) {

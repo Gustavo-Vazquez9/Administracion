@@ -12,12 +12,18 @@ import { TarjetasRoutingModule } from './admin-routing.module';
 import { AgregarGastoComponent } from './agregar-gasto/agregar-gasto.component';
 import { NominaComponent } from './nomina/nomina.component';
 import { ServicesService } from '../services/services.service';
+import { ModificarGastoComponent } from './modificar-gasto/modificar-gasto.component';
+import { EliminarGastoComponent } from './eliminar-gasto/eliminar-gasto.component';
+import { HistorialComponent } from './historial/historial.component';
 
 @NgModule({
   declarations: [
     PrincipalComponent,
     NominaComponent,
-    AgregarGastoComponent
+    AgregarGastoComponent,
+    ModificarGastoComponent,
+    EliminarGastoComponent,
+    HistorialComponent
   ],
   imports: [
     CommonModule,
